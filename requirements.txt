@@ -4,3 +4,4 @@ passlib
 sqlalchemy
 python-dotenv
 solapi
+argon2_cffi
