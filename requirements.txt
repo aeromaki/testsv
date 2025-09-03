@@ -1,0 +1,6 @@
+fastapi[all]
+python-jose[cryptography]
+passlib
+sqlalchemy
+python-dotenv
+solapi
