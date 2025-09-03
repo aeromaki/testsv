@@ -4,22 +4,24 @@ from models import User
 from typing import Annotated
 from core.config import SOLAPI_NUMBER
 
+from concurrent.futures import ProcessPoolExecutor
+import asyncio
+from glue.analyze import analyze
+
+executor = ProcessPoolExecutor(max_workers=4)
+
 
 router = APIRouter(prefix="/api", tags=["api"])
 
 
 @router.post('/analyze')
-def upload_webm(
+async def upload_webm(
     file: Annotated[UploadFile, File(description='WebM')],
     user: Annotated[User, Depends(get_current_user)]
 ):
-    return {
-        "pitch": 85,
-        "rhythm": 75,
-        "emotion": 3,
-        "total": 75,
-        "content": "피치가 제법 정확합니다."
-    }
+    loop = asyncio.get_running_loop()
+    result = await loop.run_in_executor(executor, analyze)
+    return result
 
 
 @router.post('/sendsms')
