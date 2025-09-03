@@ -1,6 +1,7 @@
 import time
 
-def analyze():
+def analyze(path: str):
+    print(path)
     time.sleep(5)
     return {
         "pitch": 85,

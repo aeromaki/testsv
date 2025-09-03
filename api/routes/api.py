@@ -7,6 +7,8 @@ from core.config import SOLAPI_NUMBER
 from concurrent.futures import ProcessPoolExecutor
 import asyncio
 from glue.analyze import analyze
+import tempfile
+import os
 
 executor = ProcessPoolExecutor(max_workers=4)
 
@@ -19,8 +21,15 @@ async def upload_webm(
     file: Annotated[UploadFile, File(description='WebM')],
     user: Annotated[User, Depends(get_current_user)]
 ):
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as tmp:
+        content = await file.read()
+        tmp.write(content)
+        tmp_path = tmp.name
+
     loop = asyncio.get_running_loop()
-    result = await loop.run_in_executor(executor, analyze)
+    result = await loop.run_in_executor(executor, analyze, tmp_path)
+
+    os.remove(tmp_path)
     return result
 
 
