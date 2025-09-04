@@ -15,3 +15,5 @@ ACCESS_TOKEN_EXPIRE: timedelta = timedelta(days=7)
 SOLAPI_KEY: str = os.environ['SOLAPI_KEY']
 SOLAPI_SECRET: str = os.environ['SOLAPI_SECRET']
 SOLAPI_NUMBER: str = os.environ['SOLAPI_NUMBER']
+
+SR = 8000

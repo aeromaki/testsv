@@ -5,3 +5,6 @@ sqlalchemy
 python-dotenv
 solapi
 argon2_cffi
+
+librosa
+numpy
